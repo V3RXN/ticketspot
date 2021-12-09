@@ -31,7 +31,7 @@ function register() {
     fname = $("#fnameInput").val();
     lname = $("#lnameInput").val();
     email = $("#emailInput").val();
-    password = $("#passwordInput").val();
+    password1 = $("#passwordInput").val();
 
     //validate if the fields are empty
     if(fname.length < 1 || lname.length < 1 || email.length < 1 || password1.length < 1){
@@ -40,14 +40,14 @@ function register() {
     }
 
     //validate email and password
-    if (validate_email(email) == false || validate_password(password) == false) {
+    if (validate_email(email) == false || validate_password(password1) == false) {
         alert('Please enter correct values for email and password')
         return
         // Don't continue running the code
     }
 
     // Move on with Auth
-    auth.createUserWithEmailAndPassword(email, password)
+    auth.createUserWithEmailAndPassword(email, password1)
     .then(function() {
     // Declare user variable
     var user = auth.currentUser
@@ -98,8 +98,6 @@ function login() {
         // Add this user to Firebase Database
         var database_ref = database.ref()
         
-
-        loggedIn = true;
         alert('Logged In successfully!')
         window.location.replace("home.html");
     })
@@ -163,10 +161,49 @@ function resetPassword(){
     })
 }
 
+//Admin login function
+function adminLogin(){
+
+        email = $("#emailForLogin").val();
+        password = $("#passwordForLogin").val();
+    
+        // Validate input fields
+        if (validate_email(email) == false || validate_password(password) == false) {
+            alert('Please enter correct values for email and password')
+            return
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
+        .then(function() {
+            
+            uid = firebase.auth().currentUser.uid;
+
+            firebase.database().ref("users/" +uid+ "/admin").on('value',function(snapshot){
+                console.log(snapshot.val());
+                if(snapshot.val() == true){
+                    loggedIn = true;
+                    alert('Logged In successfully!')
+                    window.location.replace("admin.html");
+                }
+                else{
+                    alert("Access denied due to missing admin privileges!")
+                }
+            })
+            
+        })
+        .catch(function(error) {
+            // Firebase will use this to alert of its errors
+            var error_code = error.code
+            var error_message = error.message
+        
+            alert(error_message)
+            return
+        })
+}
+
 //Logout function
 function logout(){
     loggedIn = false;
-
     auth.signOut();
 
     window.location.replace("index.html");
@@ -211,7 +248,7 @@ function loadEvents(){
             document.getElementById("e3-title").innerText = title;
         })
 
-         //Retrieving Image
+        //Retrieving Image
          firebase.database().ref("events/e4/image").on('value',function(snapshot){
             var srclink = snapshot.val();
             document.getElementById("e4-img").src = srclink;
@@ -221,6 +258,66 @@ function loadEvents(){
         firebase.database().ref("events/e4/ename").on('value',function(snapshot){
             var title = snapshot.val();
             document.getElementById("e4-title").innerText = title;
+        })
+
+        //Retrieving Image
+        firebase.database().ref("events/e5/image").on('value',function(snapshot){
+            var srclink = snapshot.val();
+            document.getElementById("e5-img").src = srclink;
+        })
+
+        //Retrieving Event Name
+        firebase.database().ref("events/e5/ename").on('value',function(snapshot){
+            var title = snapshot.val();
+            document.getElementById("e5-title").innerText = title;
+        })
+
+        //Retrieving Image
+        firebase.database().ref("events/e6/image").on('value',function(snapshot){
+            var srclink = snapshot.val();
+            document.getElementById("e6-img").src = srclink;
+        })
+
+        //Retrieving Event Name
+        firebase.database().ref("events/e6/ename").on('value',function(snapshot){
+            var title = snapshot.val();
+            document.getElementById("e6-title").innerText = title;
+        })
+        
+        //Retrieving Image
+        firebase.database().ref("events/e7/image").on('value',function(snapshot){
+            var srclink = snapshot.val();
+            document.getElementById("e7-img").src = srclink;
+        })
+
+        //Retrieving Event Name
+        firebase.database().ref("events/e7/ename").on('value',function(snapshot){
+            var title = snapshot.val();
+            document.getElementById("e7-title").innerText = title;
+        })
+
+        //Retrieving Image
+        firebase.database().ref("events/e8/image").on('value',function(snapshot){
+            var srclink = snapshot.val();
+            document.getElementById("e8-img").src = srclink;
+        })
+
+        //Retrieving Event Name
+        firebase.database().ref("events/e8/ename").on('value',function(snapshot){
+            var title = snapshot.val();
+            document.getElementById("e8-title").innerText = title;
+        })
+
+        //Retrieving Image
+        firebase.database().ref("events/e9/image").on('value',function(snapshot){
+            var srclink = snapshot.val();
+            document.getElementById("e9-img").src = srclink;
+        })
+
+        //Retrieving Event Name
+        firebase.database().ref("events/e9/ename").on('value',function(snapshot){
+            var title = snapshot.val();
+            document.getElementById("e9-title").innerText = title;
         })
         
 }

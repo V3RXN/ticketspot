@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <script src="index.js"></script>
+    <script src="admin.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+        html,body {
+            height: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            
+        <a class="navbar-brand" href="#" style="cursor: context-menu;">TICKETSPOT</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active ">
+                    <a class="nav-link" href="#" style> Events <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="tickets.html">Tickets</a>
+                </li> 
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reports</a>
+                </li> 
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="logout()">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="display-3">Manage Events</h1>
+    </div>
+    <br>
+    <div class="container">
+        <form>
+            <div class="row">
+                <label>Event ID</label>
+                <input class="form-control" id="eid" type="text" placeholder="Event ID">
+            </div>
+            
+            <div class="row">
+                <label>Event Name</label>
+                <input class="form-control" id="ename" type="text" placeholder="Name">
+            </div>
+
+            <div class="row">
+                <label>Event Type</label>
+                <input class="form-control" id="type" type="text" placeholder="Type">
+            </div>
+
+            <div class="row">
+                <label>Event Date</label>
+                <input class="form-control" id="date" type="date" placeholder="Date">
+            </div>
+
+            <div class="row">
+                <label>Event Time</label>
+                <input class="form-control" id="time" type="time" placeholder="Time">
+            </div>
+
+            <div class="row">
+                <label>Event Venue</label>
+                <input class="form-control" id="venue" type="text" placeholder="Venue">
+            </div>
+            
+            <div class="row">
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" id="description" rows="4" style="width:100%;"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <button type="button" id="insert-btn" onclick="insertEvent()" class="btn btn-primary mr-1">INSERT</button>
+                <button type="button" id="select-btn" onclick="selectEvent()" class="btn btn-primary mr-1">SELECT</button>
+                <button type="button" id="update-btn" onclick="updateEvent()" class="btn btn-primary mr-1">UPDATE</button>
+                <button type="button" id="delete-btn" onclick="deleteEvent()" class="btn btn-primary mr-1">DELETE</button>
+            </div>
+            <button type="button" id="clear-btn" onclick="clearEvent()" class="btn btn-primary mr-1 mt-2 mb-2" style="width: 100%;">CLEAR</button>
+        </form>
+    </div>
+</body>
+</html>

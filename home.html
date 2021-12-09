@@ -38,9 +38,14 @@
                 }
             }
             .navbar li{
-                padding-left:30px;
-                padding-right:30px;
+                padding-left:15px;
+                padding-right:15px;
             }
+            html, body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            
         </style>
 
     </head>
@@ -98,34 +103,18 @@
 
         <div class="row">
  
-            <div class="col-md-2 mx-auto pt-5">
-                <div id="cards">
+            <div class="col pt-5 mx-auto">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" id="e1-img" src="" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title" id="e1-title"></h5>
-                          <p class="card-text" id="e1-description"></p>
+                          <p class="card-text" id="e1-date"></p>
                           <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Details</a>
                         </div>
-                      </div>
-                </div>
+                    </div>
             </div>
 
-            <div class="col-md-2 mx-auto pt-5">
-                <div id="cards">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" id="e2-img" src="" alt="Card image cap">
-                        <div class="card-body">
-                          <h5 class="card-title" id="e2-title"></h5>
-                          <p class="card-text" id="e1-description"></p>
-                          <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Details</a>
-                        </div>
-                      </div>
-                </div>
-            </div>
-
-            <div class="col-md-2 mx-auto pt-5">
-                <div id="cards">
+            <div class="col pt-5 mx-auto">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" id="e3-img" src="" alt="Card image cap">
                         <div class="card-body">
@@ -133,12 +122,10 @@
                           <p class="card-text" id="e3-description"></p>
                           <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Details</a>
                         </div>
-                      </div>
-                </div>
+                    </div>
             </div>
 
-            <div class="col-md-2 mx-auto pt-5">
-                <div id="cards">
+            <div class="col pt-5 mx-auto">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" id="e4-img" src="" alt="Card image cap">
                         <div class="card-body">
@@ -146,12 +133,87 @@
                           <p class="card-text" id="e4-description"></p>
                           <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Detailse</a>
                         </div>
+                    </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+ 
+            <div class="col mx-auto pt-5">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" id="e5-img" src="" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title" id="e5-title"></h5>
+                          <p class="card-text" id="e5-description"></p>
+                          <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Details</a>
+                        </div>
                       </div>
+            </div>
+
+            <div class="col mx-auto pt-5">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" id="e6-img" src="" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title" id="e6-title"></h5>
+                          <p class="card-text" id="e6-description"></p>
+                          <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Details</a>
+                        </div>
+                      </div>
+            </div>
+
+            <div class="col mx-auto pt-5">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" id="e7-img" src="" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title" id="e7-title"></h5>
+                          <p class="card-text" id="e7-description"></p>
+                          <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Details</a>
+                        </div>
                 </div>
             </div>
 
         </div>
 
+        <div class="row center">
+ 
+            <div class="col mx-auto pt-5">
+
+                    <div class="card" style="max-width: 18rem;">
+                        <img class="card-img-top" id="e2-img" src="" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title" id="e2-title"></h5>
+                          <p class="card-text" id="e1-description"></p>
+                          <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Details</a>
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="col mx-auto pt-5">
+                <div id="cards">
+                    <div class="card" style="max-width: 18rem;">
+                        <img class="card-img-top" id="e8-img" src="" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title" id="e8-title"></h5>
+                          <p class="card-text" id="e8-description"></p>
+                          <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Detailse</a>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="col mx-auto pt-5">
+                    <div class="card" style="max-width: 18rem;">
+                        <img class="card-img-top" id="e9-img" src="" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title" id="e9-title"></h5>
+                          <p class="card-text" id="e9-description"></p>
+                          <a href="#" id="getData" class="btn btn-primary" onclick="loadEvents()">View Detailse</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
         <br>
 
     </body>

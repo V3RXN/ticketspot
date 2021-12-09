@@ -127,6 +127,11 @@
             background: #dde1e7;
         }
 
+        html, body {
+                max-width: 100%;
+                overflow-x: hidden;
+        }
+
     </style>
 
     <title> TICKETSPOT - Login or Sign Up </title>
@@ -153,6 +158,7 @@
                     <input type="password" id="passwordForLogin" class="form-control" placeholder="Password" class="required">
                  </div>
                  <button type="button" class="btn btn-black" onclick="login()">Login</button>
+                 <button type="button" class="btn btn-black" onclick="adminLogin()">Login as Admin</button>
                  <br><br>
                  <button id="view-reg-btn" type="button" class="btn btn-secondary" onclick="showRegistration()">Create New Account</button>
               </form>
