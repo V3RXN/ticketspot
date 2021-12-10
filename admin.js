@@ -2,11 +2,13 @@ function getValuesOfEvent(){
     eid = document.getElementById("eid").value;
     ename = document.getElementById("ename").value;
     date = document.getElementById("date").value;
+    date_text = document.getElementById("date-txt").value;
     venue = document.getElementById("venue").value;
     time = document.getElementById("time").value;
     type = document.getElementById("type").value;
     description = document.getElementById("description").value;
 }
+
 
 function insertEvent(){
     getValuesOfEvent();
@@ -16,11 +18,11 @@ function insertEvent(){
         ename: ename,
         venue: venue,
         date: date,
+        date_text: date_text,
         time: time,
         description: description,
         type: type
     })
-
 }
 
 function selectEvent(){
@@ -30,6 +32,7 @@ function selectEvent(){
 
         document.getElementById('ename').value = snapshot.val().ename;
         document.getElementById('date').value = snapshot.val().date;
+        document.getElementById('date-txt').value = snapshot.val().date_text;
         document.getElementById('venue').value = snapshot.val().venue;
         document.getElementById('time').value = snapshot.val().time;
         document.getElementById('type').value = snapshot.val().type;
@@ -44,6 +47,7 @@ function updateEvent(){
         ename: ename,
         venue: venue,
         date: date,
+        date_text,
         time: time,
         description: description,
         type: type
@@ -61,6 +65,7 @@ function clearEvent(){
     document.getElementById('eid').value = "";
     document.getElementById('ename').value = "";
     document.getElementById('date').value = "";
+    document.getElementById('date-txt').value = "";
     document.getElementById('venue').value = "";
     document.getElementById('time').value = "";
     document.getElementById('type').value = "";
@@ -84,7 +89,8 @@ function insertTicket(){
     firebase.database().ref('events/'+eid+ '/tickets/' +type).set({
 
         price: price,
-        available: available
+        available: available,
+        sold: 0
     })
 }
 

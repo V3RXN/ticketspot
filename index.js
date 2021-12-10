@@ -54,24 +54,24 @@ function register() {
 
     // Add this user to Firebase Database
     var database_ref = database.ref()
-
+    var reservations =0;
     // Create User data
     var user_data = {
 
       fname: fname,
       lname: lname,
-      email : email
+      email : email,
+      reservations: reservations
     }
 
-    // Push to Firebase Database
     database_ref.child('users/' + user.uid).set(user_data)
 
-    // DOne
-    alert('User Created!!')
+    
+    alert('User Created! Login to continue')
     
   })
   .catch(function(error) {
-    // Firebase will use this to alert of its errors
+
     var error_code = error.code
     var error_message = error.message
 
@@ -95,11 +95,24 @@ function login() {
         // Declare user variable
         var user = auth.currentUser
 
+        localStorage.setItem('userid',+user);
+        print = localStorage.getItem('userid')
+        console.log('')
+
+
         // Add this user to Firebase Database
         var database_ref = database.ref()
         
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+              userid = user.uid
+              localStorage.setItem('userid', userid)
+            } else {
+              // User not logged in or has just logged out.
+            }
+        });
         alert('Logged In successfully!')
-        window.location.replace("home.html");
+        window.location.replace("home.html")
     })
     .catch(function(error) {
         // Firebase will use this to alert of its errors
@@ -109,6 +122,8 @@ function login() {
         alert(error_message)
         return
     })
+
+    
 }
 
 function validate_email(email) {
@@ -183,7 +198,7 @@ function adminLogin(){
                 if(snapshot.val() == true){
                     loggedIn = true;
                     alert('Logged In successfully!')
-                    window.location.replace("admin.html");
+                    window.location.replace("events.html");
                 }
                 else{
                     alert("Access denied due to missing admin privileges!")
@@ -203,121 +218,10 @@ function adminLogin(){
 
 //Logout function
 function logout(){
-    loggedIn = false;
+    localStorage.removeItem('userid');
     auth.signOut();
 
     window.location.replace("index.html");
 }
 
 
-function loadEvents(){
-
-        //Retrieving Image
-        firebase.database().ref("events/e1/image").on('value',function(snapshot){
-            var srclink = snapshot.val();
-            document.getElementById("e1-img").src = srclink;
-        })
-
-        //Retrieving Event Name
-        firebase.database().ref("events/e1/ename").on('value',function(snapshot){
-            var title = snapshot.val();
-            document.getElementById("e1-title").innerText = title;
-        })
-        
-        //Retrieving Image
-        firebase.database().ref("events/e2/image").on('value',function(snapshot){
-            var srclink = snapshot.val();
-            document.getElementById("e2-img").src = srclink;
-        })
-
-        //Retrieving Event Name
-        firebase.database().ref("events/e2/ename").on('value',function(snapshot){
-            var title = snapshot.val();
-            document.getElementById("e2-title").innerText = title;
-        })
-
-        //Retrieving Image
-        firebase.database().ref("events/e3/image").on('value',function(snapshot){
-            var srclink = snapshot.val();
-            document.getElementById("e3-img").src = srclink;
-        })
-
-        //Retrieving Event Name
-        firebase.database().ref("events/e3/ename").on('value',function(snapshot){
-            var title = snapshot.val();
-            document.getElementById("e3-title").innerText = title;
-        })
-
-        //Retrieving Image
-         firebase.database().ref("events/e4/image").on('value',function(snapshot){
-            var srclink = snapshot.val();
-            document.getElementById("e4-img").src = srclink;
-        })
-
-        //Retrieving Event Name
-        firebase.database().ref("events/e4/ename").on('value',function(snapshot){
-            var title = snapshot.val();
-            document.getElementById("e4-title").innerText = title;
-        })
-
-        //Retrieving Image
-        firebase.database().ref("events/e5/image").on('value',function(snapshot){
-            var srclink = snapshot.val();
-            document.getElementById("e5-img").src = srclink;
-        })
-
-        //Retrieving Event Name
-        firebase.database().ref("events/e5/ename").on('value',function(snapshot){
-            var title = snapshot.val();
-            document.getElementById("e5-title").innerText = title;
-        })
-
-        //Retrieving Image
-        firebase.database().ref("events/e6/image").on('value',function(snapshot){
-            var srclink = snapshot.val();
-            document.getElementById("e6-img").src = srclink;
-        })
-
-        //Retrieving Event Name
-        firebase.database().ref("events/e6/ename").on('value',function(snapshot){
-            var title = snapshot.val();
-            document.getElementById("e6-title").innerText = title;
-        })
-        
-        //Retrieving Image
-        firebase.database().ref("events/e7/image").on('value',function(snapshot){
-            var srclink = snapshot.val();
-            document.getElementById("e7-img").src = srclink;
-        })
-
-        //Retrieving Event Name
-        firebase.database().ref("events/e7/ename").on('value',function(snapshot){
-            var title = snapshot.val();
-            document.getElementById("e7-title").innerText = title;
-        })
-
-        //Retrieving Image
-        firebase.database().ref("events/e8/image").on('value',function(snapshot){
-            var srclink = snapshot.val();
-            document.getElementById("e8-img").src = srclink;
-        })
-
-        //Retrieving Event Name
-        firebase.database().ref("events/e8/ename").on('value',function(snapshot){
-            var title = snapshot.val();
-            document.getElementById("e8-title").innerText = title;
-        })
-
-        //Retrieving Image
-        firebase.database().ref("events/e9/image").on('value',function(snapshot){
-            var srclink = snapshot.val();
-            document.getElementById("e9-img").src = srclink;
-        })
-
-        //Retrieving Event Name
-        firebase.database().ref("events/e9/ename").on('value',function(snapshot){
-            var title = snapshot.val();
-            document.getElementById("e9-title").innerText = title;
-        })
-        
-}
