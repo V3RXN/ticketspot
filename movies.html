@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TICKETSPOT - Movies</title>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <!-- Bootstrap CSS & JS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="index.js"></script>
+
+    <style>
+        .row{
+                display: flex;
+                flex-direction: row;
+                place-items: center;
+                text-align: center;
+	            align-items: center;
+            }
+            @media (min-width: 992px){
+                .navbar li {
+                    margin-left : 1em;
+                    margin-right : 1em;
+                }
+            }
+        .navbar li{
+                padding-left:15px;
+                padding-right:15px;
+            }
+        .container{
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card{
+                border: 0;
+        }
+
+        .card:hover{
+            box-shadow: 0 0 10px #000000, 0 0 10px #000000, 0 0 10px #000000;
+            transition-delay: 0.1s;
+        }
+
+        body{
+            background: #a8c0ff;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #3f2b96, #a8c0ff);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #3f2b96, #a8c0ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+    </style>
+
+    <script type="text/javascript">
+
+        function loadMovies(){
+            //Retrieving Image
+            firebase.database().ref("events/e1/image").on('value',function(snapshot){
+                var srclink = snapshot.val();
+                document.getElementById("e1-img").src = srclink;
+            })
+
+            //Retrieving Event Name
+            firebase.database().ref("events/e1/ename").on('value',function(snapshot){
+                var title = snapshot.val();
+                document.getElementById("e1-title").innerText = title;
+            })
+
+            //Retrieving Event Date
+            firebase.database().ref("events/e1/date_text").on('value',function(snapshot){
+                var date = snapshot.val();
+                document.getElementById("e1-date").innerText = date;
+            })
+
+            //Retrieving Event Venue
+            firebase.database().ref("events/e1/venue").on('value',function(snapshot){
+                var venue = snapshot.val();
+                document.getElementById("e1-venue").innerText = "@ " +venue;
+            })
+
+            //Retrieving Image
+            firebase.database().ref("events/e6/image").on('value',function(snapshot){
+                var srclink = snapshot.val();
+                document.getElementById("e6-img").src = srclink;
+            })
+
+            //Retrieving Event Name
+            firebase.database().ref("events/e6/ename").on('value',function(snapshot){
+                var title = snapshot.val();
+                document.getElementById("e6-title").innerText = title;
+            })
+
+            //Retrieving Event Date
+            firebase.database().ref("events/e6/date_text").on('value',function(snapshot){
+                var date = snapshot.val();
+                document.getElementById("e6-date").innerText = date;
+            })
+
+            //Retrieving Event Venue
+            firebase.database().ref("events/e6/venue").on('value',function(snapshot){
+                var venue = snapshot.val();
+                document.getElementById("e6-venue").innerText = "@ " +venue;
+            })
+        }
+
+        window.onload = loadMovies;
+    </script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            
+        <a class="navbar-brand" href="#" style="cursor: context-menu;">TICKETSPOT</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html" style> Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="sports.html">Sports</a>
+                    <a class="dropdown-item" href="#">Movies</a>
+                    <a class="dropdown-item" href="music.html">Music</a>
+                    <a class="dropdown-item" href="drama.html">Drama</a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Recommendations</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">My Tickets</a>
+                    <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
+                    </div>
+                </li>
+        
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" id="search-txt" type="search" placeholder="Search events" aria-label="Search" id="search-txt">
+                <button class="btn btn-outline-success my-2 my-sm-0" id="search-btn" type="button">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-3 pb-2" style="background: black;">
+        <h2 style="color:white;">
+            Movies
+        </h2>
+    </div>
+
+    <div class="row mx-auto no-gutters justify-content-center pb-5">
+
+        <div class="d-flex justify-content-center col mx-auto pt-5">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" id="e1-img" src="" alt="Card image cap">
+                <div class="card-body">
+                <h5 class="card-title" id="e1-title"></h5>
+                <p class="card-text" id="e1-date"></p>
+                <p class="card-text" id="e1-venue"></p>
+                <a href="eventdetails.html?eventid=e1" id="getData" class="btn btn-dark">View Details</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center col mx-auto pt-5">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" id="e6-img" src="" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title" id="e6-title"></h5>
+                  <p class="card-text" id="e6-date"></p>
+                  <p class="card-text" id="e6-venue"></p>
+                  <a href="eventdetails.html?eventid=e6" id="getData" class="btn btn-dark">View Details</a>
+                </div>
+              </div>
+        </div>
+    
+    </div>
+
+    <footer class="bg-dark text-center text-white fixed-bottom">
+
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            Copyright © 2021 TICKETSPOT
+        </div>
+      
+    </footer>
+</body>
+</html>
