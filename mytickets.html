@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TICKETSPOT - My Tickets</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initaial-scale=1.0">
+
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+        <!-- Bootstrap CSS & JS-->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+        <script src="index.js"></script>
+        
+        <style>
+            .row{
+                display: flex;
+                flex-direction: row;
+                place-items: center;
+                text-align: center;
+	            align-items: center;
+            }
+            @media (min-width: 992px){
+                .navbar li {
+                    margin-left : 1em;
+                    margin-right : 1em;
+                }
+            }
+            .navbar li{
+                padding-left:15px;
+                padding-right:15px;
+            }
+            html, body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            }
+
+            body{
+                background: #654ea3;  /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #eaafc8, #654ea3);  /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #eaafc8, #654ea3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                padding-top: 55px;
+            }
+            
+        </style>
+
+    </head>
+    <body>
+            
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            
+            <a class="navbar-brand" href="#" style="cursor: context-menu;">TICKETSPOT</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html" style> Home <span class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="sports.html">Sports</a>
+                        <a class="dropdown-item" href="movies.html">Movies</a>
+                        <a class="dropdown-item" href="music.html">Music</a>
+                        <a class="dropdown-item" href="drama.html">Drama</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a id="fname" class="dropdown-item" href="#"></a>
+                        <a class="dropdown-item" href="#">My Tickets</a>
+                        <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
+                        </div>
+                    </li>
+
+
+                </ul>
+            </div>
+
+        </nav>
+
+        <div class="container mt-5">
+            <form>
+                <div class="row no-gutters mx-auto">
+
+                    <label>Your Reservation Number</label>
+                    <input class="form-control mb-2" id="rno" type="number" placeholder="Enter Reservation Number">
+
+                    <label>Event Name</label>
+                    <input class="form-control mb-2" id="ename" type="text"  disabled>
+
+                    <label>Ticket Type</label>
+                    <input class="form-control mb-2" id="ttype" type="text" disabled>
+                    
+                    <label>Number of Tickets</label>
+                    <input class="form-control mb-2" id="quantity" type="number" disabled>
+
+
+                    <button type="button" id="generate-btn" onclick="validate()" class="btn btn btn-danger mt-4 mx-auto" style="width: 100%;">CANCEL RESERVATION</button>
+                </div>
+                
+            </form>
+        </div>
+
+        
+        <footer class="bg-dark text-center text-white fixed-bottom">
+
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                Copyright © 2021 TICKETSPOT
+            </div>
+          
+        </footer>
+
+        <script>
+
+            var retrievedEvent = {};
+            var retrievedReservation = {};
+            
+            function loadReservations(){
+
+                userid = localStorage.getItem('userid');
+
+                document.getElementById("rno").addEventListener('input', function(){
+
+                    var reservationNo = this.value;
+
+                    document.getElementById("ename").value = "";
+                    document.getElementById("ttype").value = "";
+                    document.getElementById("quantity").value = "";
+
+                    firebase.database().ref("users/"+userid+"/reservations/"+reservationNo).on('value',function(snapshot){
+
+                        value = snapshot.val();
+                        
+                        if (value != null){
+                            eName = snapshot.val().ename;
+                            tType = snapshot.val().ticketType;
+                            ticketCount = snapshot.val().numberoftickets;
+
+                            document.getElementById("ename").value = eName;
+                            document.getElementById("ttype").value = tType;
+                            document.getElementById("quantity").value = ticketCount;
+                        }
+                        else{
+                            return
+                        }
+                        
+                    })    
+                })
+                
+            }
+
+            function validate(){
+
+                reservationNo = document.getElementById("rno").value;
+
+                if(reservationNo != ""){
+
+                    confirmCancellation();
+                }
+                else{
+                    alert('Please input the reservation number to view details and cancel the reservation!')
+                }
+
+            }
+
+            function confirmCancellation(){
+                var confirmation = confirm('Are you sure you want to cancel the reservation?');
+                if(confirmation == true){
+                    checkReservationAvailability();
+                }
+                else{
+                    return;
+                }
+            }
+
+            function checkReservationAvailability(){
+
+                firebase.database().ref("users/"+userid+"/reservations/"+reservationNo).on('value',function(snapshot){
+
+                    retrievedReservation = snapshot.val();
+                    eid = retrievedReservation.eid;
+                    ticketType = retrievedReservation.ticketType;
+                    quantity = retrievedReservation.numberoftickets;
+                    cancelStatus = retrievedReservation.cancelled;
+                })
+
+                //If there is no record for the given reservation number, system sends a notification
+                if(retrievedReservation == null){
+                        alert("You have no reservation for the given number! Please enter a correct number and try again")
+                        return;
+                }
+                else if(cancelStatus == true){
+                    alert("You have already cancelled this reservation!")
+                    return;
+
+                }
+                else{
+
+                    getNecessaryData();
+                }
+
+            }
+
+            function getNecessaryData(){
+
+
+                //Get current event's ticket info from database
+                firebase.database().ref("events/"+eid+"/tickets/"+ticketType).on('value',function (snapshot){
+
+                    retrievedEvent = snapshot.val();
+
+                    localStorage.setItem("EventObj",JSON.stringify(retrievedEvent));
+
+                })  
+                cancelReservation();
+                             
+            }
+
+            function cancelReservation(){
+
+                retrievedObject = localStorage.getItem("EventObj");
+
+                parsedObject = JSON.parse(retrievedObject);
+
+                let available = parsedObject.available;
+           
+                let sold = parsedObject.sold;
+  
+
+                updateSold = sold - quantity;
+
+
+                updateAvailable = available + Number(quantity);
+             
+                
+                //Update the event's ticket information
+                firebase.database().ref('events/'+eid+"/tickets/"+ticketType).update({
+                    sold: updateSold,
+                    available: updateAvailable
+                })
+
+                //Remove reservation record from the user
+                firebase.database().ref('users/'+userid+ '/reservations/' +reservationNo).update({
+
+                    cancelled: true
+                });
+
+                document.getElementById("rno").value = "";
+                document.getElementById("ename").value = "";
+                document.getElementById("ttype").value = "";
+                document.getElementById("quantity").value = "";
+
+                localStorage.removeItem("EventObj");
+
+                alert("Reservations cacncelled successfully!");
+            }
+
+
+            window.onload = loadReservations;
+            
+        </script>
+    </body>
+</html>
+

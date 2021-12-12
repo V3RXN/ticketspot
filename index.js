@@ -54,14 +54,13 @@ function register() {
 
     // Add this user to Firebase Database
     var database_ref = database.ref()
-    var reservations =0;
+    
     // Create User data
     var user_data = {
 
       fname: fname,
       lname: lname,
-      email : email,
-      reservations: reservations
+      email : email
     }
 
     database_ref.child('users/' + user.uid).set(user_data)

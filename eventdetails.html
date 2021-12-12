@@ -10,8 +10,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
     <!-- Bootstrap CSS & JS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -119,13 +117,9 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="sports.html">Sports</a>
                     <a class="dropdown-item" href="movies.html">Movies</a>
-                    <a class="dropdown-item" href="#">Music</a>
+                    <a class="dropdown-item" href="music.html">Music</a>
                     <a class="dropdown-item" href="drama.html">Drama</a>
                     </div>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Recommendations</a>
                 </li>
 
                 <li class="nav-item">
@@ -137,30 +131,24 @@
                     Profile
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">My Tickets</a>
+                        <a class="dropdown-item" href="mytickets.html">My Tickets</a>
                         <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
                     </div>
                 </li>
 
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" id="search-txt" type="search" placeholder="Search events" aria-label="Search" id="search-txt">
-                <button class="btn btn-outline-success my-2 my-sm-0" id="search-btn" type="button">Search</button>
-            </form>
         </div>
 
     </nav>
 
     <div class="card-wrapper">
         <div class="card">
-          <!-- card left -->
           <div class="event-imgs">
             <div class="img-display">
                 <img>
             </div>
           </div>
-          <!-- card right -->
           <div class="event-content">
             <h2 class="event-title" id="event-name"></h2>
   

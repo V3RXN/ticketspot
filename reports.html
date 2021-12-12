@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <script src="index.js"></script>
+    <script src="admin.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+        html,body {
+            height: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            
+        <a class="navbar-brand" href="#" style="cursor: context-menu;">TICKETSPOT</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mR-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="events.html" style> Events <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="tickets.html">Tickets</a>
+                </li> 
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Reports</a>
+                </li> 
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="logout()">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-2">
+        <h1 class="display-3">Generate Event Reports</h1>
+    </div>
+
+    <br>
+    <div class="container">
+        <form>
+            <div class="row">
+                <label>Event ID</label>
+                <input class="form-control mb-2" id="eid" type="text" placeholder="Event ID">
+            </div>
+            
+            <button type="button" id="generate-btn" onclick="generateReport()" class="btn btn-primary mr-1 mt-2 mb-2" style="width: 100%;">GENERATE</button>
+
+        </form>
+    </div>
+
+    <script type="text/javascript">
+
+        function generateReport(){
+
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date+' '+time;
+
+            try{
+                eid = document.getElementById("eid").value;
+
+                firebase.database().ref("events/" +eid).on('value',function(snapshot){
+                    
+                    var ename =snapshot.val().ename;
+                    var id = "Event ID: " +eid;
+                    
+                    var generated_time = "Report generation time: " +dateTime;
+
+                    var silver_price =snapshot.val().tickets.Silver.price;
+                    var silver_sold =snapshot.val().tickets.Silver.sold;
+
+                    if(silver_sold != 0){
+                    
+                        var silver_revenue = silver_sold * silver_price;
+                    }
+                    else if(silver_sold == 0){
+                        var silver_revenue = 0;
+                    }
+
+                    var a = "Price of a silver ticket: " +silver_price +"LKR";
+                    var b = "Silver tickets sold: " +silver_sold;
+                    var c = "Total revenue from Silver Tickets: " +silver_revenue +"LKR";
+
+                    var gold_price =snapshot.val().tickets.Gold.price;
+                    var gold_sold =snapshot.val().tickets.Gold.sold;
+
+                    if(gold_sold != 0){
+                    
+                        var gold_revenue = gold_sold * gold_price;
+                    }
+                    else if(gold_sold == 0){
+
+                        var gold_revenue = 0;
+                    }
+
+                    var d = "Price of a Gold ticket: " +gold_price +"LKR";
+                    var e = "Gold tickets sold: " +gold_sold;
+                    var f = "Total revenue from Gold Tickets: " +gold_revenue +"LKR";
+
+                    var plat_price =snapshot.val().tickets.Platinum.price;
+                    var plat_sold =snapshot.val().tickets.Platinum.sold;
+
+                    if(plat_sold != 0){
+                    
+                        var plat_revenue = plat_sold * plat_price;
+                    }
+                    else if(gold_sold == 0){
+
+                        var plat_revenue = 0;
+                    }
+
+                    var g = "Price of a Platinum ticket: " +plat_price +"LKR";
+                    var h = "Platinum tickets sold: " +plat_sold;
+                    var i = "Total revenue from Platinum Tickets: " +plat_revenue +"LKR";
+
+                    var total_rev = plat_revenue + silver_revenue + gold_revenue;
+
+                    var j = "Total Revenue: " + total_rev + "LKR"
+
+
+                    var doc = new jsPDF();
+                    doc.text(20, 20, ename);
+                    doc.text(20, 30, id);
+                    doc.text(20, 40, "Current Sales:");
+                    doc.text(20, 50, a)
+                    doc.text(20, 60, b)
+                    doc.text(20, 70, c)
+                    doc.text(20, 80, d)
+                    doc.text(20, 90, e)
+                    doc.text(20, 100, f)
+                    doc.text(20, 110, g)
+                    doc.text(20, 120, h)
+                    doc.text(20, 130, i)
+                    doc.text(20, 140, j)
+
+                    doc.text(20, 160, generated_time);
+                    doc.save("report.pdf")
+                })
+            }
+
+            catch(e){
+                alert(e.message);
+            }
+        }
+    </script>
+    <script src="jsPDF-1.3.2/dist/jspdf.min.js"></script>
+</body>
+
+</html>

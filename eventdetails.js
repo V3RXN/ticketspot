@@ -1,6 +1,5 @@
 let urlParams = new URLSearchParams(document.location.search)
 const eid= urlParams.get('eventid');
-reservationNo = 0;
 
 window.onload = loadCurrentEvent;
 
@@ -71,7 +70,7 @@ function loadCurrentEvent(){
     })
 }
 
-document.querySelector('#ticket-types').addEventListener('change', function() {
+document.querySelector('#ticket-types').addEventListener('change', function f1() {
 
     quantity = document.querySelector("#ticket-quantity").value;
     console.log(quantity)
@@ -141,40 +140,44 @@ document.querySelector("#ticket-quantity").addEventListener('input',function(){
 
 function reserveTickets(){
 
-        nowAvailableTickets = availability - quantity;
+    nowAvailableTickets = availability - quantity;
 
-        soldToNum = Number(sold);
- 
-        updateSold = soldToNum+ Number(quantity);
+    soldToNum = Number(sold);
 
-        //Update number of available tickets in the database
-        firebase.database().ref('events/'+eid+'/tickets/' +ticketType).update({
-            available: nowAvailableTickets,
-            sold: Number(updateSold)
-        })
+    updateSold = soldToNum + Number(quantity);
 
-        userid = localStorage.getItem('userid');
+    //Update number of available tickets in the database
+    firebase.database().ref('events/'+eid+'/tickets/' +ticketType).update({
+        available: nowAvailableTickets,
+        sold: Number(updateSold)
+    })
+
+    userid = localStorage.getItem('userid');
+    
+    var ref = firebase.database().ref("users/"+userid+"/reservations");
+    ref.once("value")
+    .then(function(snapshot){
+
+        reservationNoFromDB = snapshot.numChildren();
+    
+        reservationNo = reservationNoFromDB;
+        reservationNo++;
         
-        var ref = firebase.database().ref("users/"+userid+"/reservations");
-        ref.once("value")
-        .then(function(snapshot){
+        firebase.database().ref('users/'+userid+'/reservations/' +reservationNo).set({
 
-            reservationNoFromDB = snapshot.numChildren();
-        
-            reservationNo = reservationNoFromDB;
-            reservationNo++;
-            
-            firebase.database().ref('users/'+userid+'/reservations/' +reservationNo).set({
-
-                eid: eid,
-                ename: title,
-                type: type,
-                ticketType: ticketType,
-                numberoftickets: quantity
-            })
+            eid: eid,
+            ename: title,
+            type: type,
+            ticketType: ticketType,
+            numberoftickets: quantity
         })
+    })
 
-        alert("Reserved Successfully!")
+    alert("Reserved Successfully!")
+
+    document.querySelector('#ticket-types').value = "Silver";
+    document.querySelector('#ticket-quantity').value = "";
+    document.querySelector('#total-amount').innerText = "";
 }
 
 function validate(){
@@ -185,12 +188,22 @@ function validate(){
 
     if(quantity>0){
 
-        checkAvailability();
+        confirmReservation();
     }
     else{
         alert('Please select one or more tickets to reserve!')
     }
 
+}
+
+function confirmReservation(){
+    var confirmation = confirm('Are you sure you want to reserve tickets?');
+    if(confirmation == true){
+        checkAvailability();
+    }
+    else{
+        return;
+    }
 }
 
 function checkAvailability(){
@@ -201,7 +214,7 @@ function checkAvailability(){
         sold = snapshot.val().sold;
     })
 
-    if(quantity<=availability){
+    if(quantity<=Number(availability)){
 
         reserveTickets();
 
@@ -211,3 +224,4 @@ function checkAvailability(){
     }
 
 }
+
