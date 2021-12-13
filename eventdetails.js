@@ -1,4 +1,5 @@
 let urlParams = new URLSearchParams(document.location.search)
+
 const eid= urlParams.get('eventid');
 
 window.onload = loadCurrentEvent;
@@ -163,6 +164,7 @@ function reserveTickets(){
         reservationNo = reservationNoFromDB;
         reservationNo++;
         
+        //Creates a record for the reservation in users directory
         firebase.database().ref('users/'+userid+'/reservations/' +reservationNo).set({
 
             eid: eid,
@@ -171,9 +173,10 @@ function reserveTickets(){
             ticketType: ticketType,
             numberoftickets: quantity
         })
+        alert("Reserved Successfully! Your reservation number is: " + reservationNo)
     })
 
-    alert("Reserved Successfully!")
+    
 
     document.querySelector('#ticket-types').value = "Silver";
     document.querySelector('#ticket-quantity').value = "";
