@@ -51,7 +51,7 @@
                 </li> 
 
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Reports</a>
+                    <a class="nav-link" href="#">Revenue Reports</a>
                 </li> 
 
                 <li class="nav-item">
@@ -62,7 +62,7 @@
     </nav>
 
     <div class="container mt-5 pt-2">
-        <h1 class="display-3">Generate Event Reports</h1>
+        <h1 class="display-3">Revenue Reports</h1>
     </div>
 
     <br>
@@ -71,9 +71,12 @@
             <div class="row">
                 <label>Event ID</label>
                 <input class="form-control mb-2" id="eid" type="text" placeholder="Event ID">
+
+            </div>
+            <div class="row">
+                <button type="button" id="generate-btn" onclick="generateReport()" class="btn btn-primary mr-1 mt-2 mb-2" style="width: 100%;">GENERATE</button>
             </div>
             
-            <button type="button" id="generate-btn" onclick="generateReport()" class="btn btn-primary mr-1 mt-2 mb-2" style="width: 100%;">GENERATE</button>
 
         </form>
     </div>
@@ -91,11 +94,9 @@
                 eid = document.getElementById("eid").value;
 
                 firebase.database().ref("events/" +eid).on('value',function(snapshot){
-                    
+
                     var ename =snapshot.val().ename;
                     var id = "Event ID: " +eid;
-                    
-                    var generated_time = "Report generation time: " +dateTime;
 
                     var silver_price =snapshot.val().tickets.Silver.price;
                     var silver_sold =snapshot.val().tickets.Silver.sold;
@@ -146,8 +147,9 @@
 
                     var total_rev = plat_revenue + silver_revenue + gold_revenue;
 
-                    var j = "Total Revenue: " + total_rev + "LKR"
-
+                    var j = "Total Revenue: " + total_rev + "LKR";
+                    
+                    var generated_time = "Report generation time: " +dateTime;
 
                     var doc = new jsPDF();
                     doc.text(20, 20, ename);
@@ -165,7 +167,8 @@
                     doc.text(20, 140, j)
 
                     doc.text(20, 160, generated_time);
-                    doc.save("report.pdf")
+
+                    window.open(doc.output('bloburl'), '_blank')
                 })
             }
 
@@ -173,6 +176,7 @@
                 alert(e.message);
             }
         }
+
     </script>
     <script src="jsPDF-1.3.2/dist/jspdf.min.js"></script>
 </body>
